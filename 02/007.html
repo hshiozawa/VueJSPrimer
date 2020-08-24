@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+    <title>はじめての Vue.js</title>
+</head>
+
+<script src="https://unpkg.com/vue@2.5.17"></script>
+
+<div id="app">
+    <p>{{ count }}</p>
+</div>
+
+<script>
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            count: 0,
+            timerId: null
+        },
+        created: function () {
+            console.log('created');
+            const that = this;
+            console.log(this.count);
+            console.log(this.$el);
+            this.timerId = setInterval(function () {
+                that.count += 1;
+            }, 1000)
+        },
+        mounted: function () {
+            console.log('mounted');
+            console.log(this.$el);
+        },
+        beforeDestroy: function () {
+            console.log('beforeDestroy');
+            clearInterval(this.timerId);
+        }
+    });
+    window.vm = vm;
+</script>

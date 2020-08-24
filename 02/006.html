@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+    <title>はじめての Vue.js</title>
+</head>
+
+<script src="https://unpkg.com/vue@2.5.17"></script>
+
+<div id="app">
+    <ul>
+        <li v-for="item in list" v-bind:key="item">{{item}}</li>
+    </ul>
+    <ul>
+        <li v-for="(item, i) in list" v-bind:key="item">{{i}}, {{item}}</li>
+    </ul>
+</div>
+
+<script>
+    console.assert(typeof Vue !== "undefined");
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            list: ['い', 'ろ', 'は']
+        }
+    });
+</script>

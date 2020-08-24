@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+    <title>はじめての Vue.js</title>
+</head>
+
+<script src="https://unpkg.com/vue@2.5.17"></script>
+
+<div id="app">
+</div>
+
+<script>
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            prefix: 'Hello'
+        },
+        computed: {
+            message: function () {
+                const timestamp = Date.now();
+                return this.prefix + ',' + timestamp;
+            }
+        }
+    });
+    window.vm = vm;
+</script>
