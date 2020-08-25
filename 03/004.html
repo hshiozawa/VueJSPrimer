@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+    <title>はじめての Vue.js</title>
+</head>
+
+
+<script src="https://unpkg.com/vue@2.5.17"></script>
+
+<div id="fruits-list">
+</div>
+
+<fruits-list-title></fruits-list-title>
+
+
+<script>
+    const FruitsListTitle = Vue.extend({
+        template: '<h1>フルーツ一覧</h1>'
+    });
+
+    new FruitsListTitle().$mount('#fruits-list')
+
+    Vue.component('fruits-list-title', FruitsListTitle);
+</script>

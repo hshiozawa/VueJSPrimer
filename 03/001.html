@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+    <title>はじめての Vue.js</title>
+</head>
+
+
+<script src="https://unpkg.com/vue@2.5.17"></script>
+
+<div id="example">
+    <list-item></list-item>
+</div>
+
+<script>
+    Vue.component('list-item', {
+        template: '<li>foo {{ contents }}</li>',
+        // return must be function!
+        data: function () {
+            return {
+                contents: 'bar'
+            }
+        }
+    });
+
+    new Vue({
+        el: '#example'
+    });
+</script>
