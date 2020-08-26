@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+    <title>はじめての Vue.js</title>
+</head>
+
+<script src="https://unpkg.com/vue@2.5.17"></script>
+
+<div id="fruits-list">
+    <page-header>
+        <h1 slot="header">夏の果物</h1>
+    </page-header>
+</div>
+
+<script>
+    const headerTemplate = `
+    <div style="color: gray;">
+    <slot name="header">親から何も渡されないとこの文が表示されます</slot>
+    </div>
+    `;
+
+    Vue.component('page-header', {
+        template: headerTemplate
+    });
+
+    new Vue({
+        el: '#fruits-list'
+    });
+</script>

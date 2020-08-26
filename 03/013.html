@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+    <title>はじめての Vue.js</title>
+</head>
+
+<script src="https://unpkg.com/vue@2.5.17"></script>
+
+<div id="fruits-list">
+    <login-template></login-template>
+</div>
+
+<script type="text/x-template" id="login">
+    <div id="login-template">
+        <div>
+            <input type="text" placeholder="ログインID" v-model="userid">
+        </div>
+        <div>
+            <input type="password" placeholder="パスワード" v-model="password">
+        </div>
+        <div>
+            <button @click="login">ログイン</button>
+        </div>
+    </div>
+    </div>
+</script>
+
+<script>
+    const auth = {
+        login: function (id, pass) {
+            window.alert(`userid: ${id}, pass: ${pass}`);
+        }
+    };
+
+    Vue.component('login-template', {
+        template: "#login",
+        data: function () {
+            return {
+                userid: '',
+                password: ''
+            }
+        },
+        methods: {
+            login: function () {
+                auth.login(this.userid, this.password);
+            }
+        }
+    });
+
+    new Vue({
+        el: '#fruits-list'
+    });
+</script>
