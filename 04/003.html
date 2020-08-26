@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<script src="https://unpkg.com/vue@2.5.17"></script>
+<script src="https://unpkg.com/vue-router@3.0.1"></script>
+
+<div id="app">
+    <router-view></router-view>
+</div>
+
+<script>
+    const getUsers = function (callback) {
+        callback(null, ["A", "B", "C"]);
+    }
+
+    const UserList = {
+        template: '<div>users: {{ users }}</div>',
+        data: function () {
+            return {
+                users: function () {
+                    return [];
+                },
+                error: null
+            }
+        },
+        beforeRouteEnter: function (to, from, next) {
+            getUsers((function (err, users) {
+                if (err) {
+                    this.error = err.toString();
+                } else {
+                    next(function (vm) {
+                        vm.users = users
+                    })
+                }
+            }).bind(this));
+        }
+    };
+
+    const router = new VueRouter({
+        routes: [
+            {
+                path: '/users2',
+                component: UserList,
+                beforeEnter: function (to, from, next) {
+                    if (to.query.redirect === 'true') {
+                        next('/top')
+                    } else {
+                        next()
+                    }
+                }
+            }
+        ]
+    });
+
+    router.beforeEach(function (to, from, next) {
+        if (to.path === '/users') {
+            next('/top');
+        } else {
+            next();
+        }
+    });
+
+    const app = new Vue({
+        router: router
+    }).$mount('#app');
+</script>
