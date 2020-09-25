@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Vue app</title>
+
+<script src="https://unpkg.com/vue@2.5.17"></script>
+
+<div id="app">
+    <img v-fallback-image.once="noImageURL" src="./logo.png" :alt="altText">
+</div>
+
+<script>
+    Vue.directive('fallback-image', {
+        bind: function (el, binding) {
+            const once = binding.modifiers.once;
+            el.addEventListener('error', function onError() {
+                el.src = binding.value;
+                if (once) {
+                    el.removeEventListener('error', onError);
+                }
+            });
+        },
+        update: function (el, binding) {
+            if (binding.value !== binding.oldValue) {
+                if (binding.oldValue !== binding.value && binding.oldValue === el.src) {
+                    el.src = binding.value;
+                }
+            }
+        }
+    });
+
+    const vm = new Vue({
+        el: '#app',
+        data: function () {
+            return {
+                altText: 'logo',
+                noImageURL: 'https://dummyimage.com/400x400/000/ffffff.png&text=no+image'
+            }
+        }
+    });
+</script>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Vue app</title>
+
+<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+<script src="https://unpkg.com/vue@2.5.17"></script>
+
+<div id="app">
+    <icon-share-button></icon-share-button>
+    <text-share-button></text-share-button>
+</div>
+
+<script>
+    const Sharable = {
+        data: function () {
+            return {
+                counter: 0,
+                _isProcessing: false
+            }
+        },
+        created: function () {
+            console.log('Sharable ミックスインのフックが呼ばれました');
+        },
+        methods: {
+            share: function () {
+                console.log(`counter=${this.counter++}`);
+                if (this._isProcessing) {
+                    return;
+                }
+                if (!window.confirm('シェアしますか？')) {
+                    return;
+                }
+                this._isProcessing = true;
+
+                setTimeout(() => {
+                    window.alert('シェアしました');
+                    this._isProcessing = false;
+                }, 1000);
+            }
+        }
+    }
+    const IconShareButton = {
+        mixins: [Sharable],
+        created: function () {
+            console.log('IconShareButton のフックが呼ばれました');
+        },
+        template: `
+          <button @click="share"><i class="fas fa-share-square"></i></button>
+        `
+    }
+    const TextShareButton = {
+        mixins: [Sharable],
+        created: function () {
+            console.log('TextShareButton のフックが呼ばれました');
+        },
+        template: `
+          <button @click="share">シェアする</button>
+        `,
+    }
+
+    new Vue({
+        el: '#app',
+        components: {
+            IconShareButton: IconShareButton,
+            TextShareButton: TextShareButton
+        }
+    })
+
+</script>

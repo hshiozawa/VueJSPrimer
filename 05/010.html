@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Vue app</title>
+
+<script src="https://unpkg.com/vue@2.5.17"></script>
+
+<div id="app">
+    <my-button href="https://vuejs.org/">anchor</my-button>
+    <my-button tag="span">span</my-button>
+    <my-button>button</my-button>
+</div>
+
+<script>
+    const MyButton = {
+        props: ['href', 'tag'],
+        template: `
+          <a v-if="(!tag && href) || tag === 'a'" :href=" href || '#'">
+          <slot></slot>
+          </a>
+          <span v-else-if="tag === 'span'">
+                <slot></slot>
+                </span>
+          <button v-else>
+          <slot></slot>
+          </button>
+        `
+    };
+
+    const MyButtonRender = {
+        props: ['href', 'tag'],
+        render: function (createElement) {
+            const tag = this.tag || (this.href ? 'a' : 'button')
+            return createElement(tag, {
+                attrs: {
+                    href: this.href || '#'
+                }
+            }, this.$slots.default)
+        }
+    }
+
+    const vm = new Vue({
+        el: '#app',
+        components: {
+            MyButton: MyButtonRender
+        }
+    });
+</script>

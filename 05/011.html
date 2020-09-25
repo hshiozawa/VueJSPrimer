@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Vue app</title>
+
+<script src="https://unpkg.com/vue@2.5.17"></script>
+
+<div id="app">
+</div>
+
+<script>
+    const vm = new Vue({
+        el: '#app',
+        data: function () {
+            return {
+                counter: 0
+            }
+        },
+        render: function (createElement) {
+            return createElement(
+                'div',
+                [
+                    createElement(
+                        'button',
+                        {
+                            on: {
+                                click: () => this.counter += 1
+                            }
+                        },
+                        'クリックでカウントアップ'
+                    ),
+                    createElement(
+                        'p',
+                        [
+                            'クリックされた回数: ',
+                            createElement(
+                                'b',
+                                this.counter + '回'
+                            )
+                        ]
+                    )
+                ]
+            );
+        }
+    });
+</script>
