@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<script src="https://unpkg.com/vue@2.5.17"></script>
+
+<div id="app">
+    <my-button>{{ textLabel }}</my-button>
+</div>
+
+<script type="text/x-template" id="myButton">
+    <div>
+        {{textLabel}}
+        <button>
+            <slot>OK</slot>
+        </button>
+    </div>
+</script>
+
+<script>
+    const MyButton = {
+        template: '#myButton',
+        data: function () {
+            return {
+                textLabel: 'child'
+            }
+        }
+    };
+    const app = new Vue({
+        el: '#app',
+        components: {
+            MyButton: MyButton
+        },
+        data: function () {
+            return {
+                textLabel: 'parent'
+            }
+        }
+    });
+</script>

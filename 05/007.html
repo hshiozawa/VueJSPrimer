@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<script src="https://unpkg.com/vue@2.5.17"></script>
+
+<div id="app">
+    <todo-list :todos="todos">
+        <li slot-scope="{ todo }" v-if="todo.isCompleted">
+            todo.text
+        </li>
+    </todo-list>
+</div>
+
+<script type="text/x-template" id="todoList">
+    <ul>
+        <template v-for="todo in todos">
+            <slot :todo="todo">
+                <li :key="todo.id">
+                    {{ todo.text }}
+                </li>
+            </slot>
+        </template>
+    </ul>
+</script>
+
+<script>
+    const TodoList = {
+        props: {
+            todos: {
+                type: Array,
+                required: true
+            }
+        },
+        template: '#todoList'
+    };
+    const app = new Vue({
+        el: '#app',
+        data: function () {
+            return {
+                todos: [
+                    {id: 1, text: 'C++', isCompleted: true},
+                    {id: 2, text: 'JavaScript', isCompleted: false},
+                    {id: 3, text: 'Java', isCompleted: true},
+                    {id: 4, text: 'Perl', isCompleted: false},
+                ]
+            }
+        },
+        components: {
+            TodoList: TodoList
+        }
+    });
+</script>

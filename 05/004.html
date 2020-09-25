@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<script src="https://unpkg.com/vue@2.5.17"></script>
+
+<div id="app">
+    <!-- コンテンツありでコンポーネントを設置 -->
+    <my-button>送信する</my-button>
+
+    <!-- コンテンツなしでコンポーネントを設置 -->
+    <my-button></my-button>
+</div>
+
+<script>
+    const MyButton = {
+        template: `
+        <button>
+<slot>OK</slot>
+</button>`
+    };
+    const app = new Vue({
+        el: '#app',
+        components: {
+            MyButton: MyButton
+        }
+    });
+</script>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<script src="https://unpkg.com/vue@2.5.17"></script>
+
+<div id="app">
+    <my-page>
+        <h1 slot="header">This is my page</h1>
+        <p>
+            Lorem ipsum dolor sit amet, duo ex illum debet inermis,
+        </p>
+        <p slot="footer">This is footer</p>
+    </my-page>
+</div>
+
+<script type="text/x-template" id="myPage">
+    <div>
+        <header>
+            <slot name="header"></slot>
+        </header>
+        <main>
+            <slot>ここにメイン</slot>
+        </main>
+        <footer>
+            <slot name="footer"></slot>
+        </footer>
+    </div>
+</script>
+
+<script>
+    const MyPage = {
+        template: '#myPage'
+    };
+    const app = new Vue({
+        el: '#app',
+        components: {
+            MyPage: MyPage
+        }
+    });
+</script>
