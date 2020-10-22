@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<script src="https://unpkg.com/vue@latest"></script>
+
+<script src="https://unpkg.com/vuex@latest"></script>
+
+<body>
+{{store.state.count}}
+<script>
+    const store = new Vuex.Store({
+        // ステート
+        state: {
+            count: 0
+        },
+
+        getters: {
+            squared: (state) => state.count * state.count,
+            cubed: (state, getters) => state.count * getters.squared
+        },
+
+        actions: {
+            incrementAction(ctx) {
+                ctx.commit('increment', {amount: 2});
+            }
+        },
+
+        mutations: {
+            increment(state, payload) {
+                state.count += payload.amount;
+            }
+        }
+    });
+
+    console.log(store.state.count);
+
+    setTimeout(function () {
+        store.commit('increment', {amount: 5});
+        console.log(store.state.count);
+
+        console.log(store.getters.cubed);
+    }, 1000);
+
+    setTimeout(function () {
+        store.dispatch('incrementAction');
+        console.log(store.state.count);
+
+        console.log(store.getters.cubed);
+    }, 2000);
+</script>
+</body>
+
+
