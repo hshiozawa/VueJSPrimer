@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<script src="https://unpkg.com/vue@latest"></script>
+
+<script src="https://unpkg.com/vuex@latest"></script>
+
+<body>
+<script>
+    const store = new Vuex.Store({
+        state: {
+            count: 1
+        },
+        getters: {
+            double(state) {
+                return state.count + state.count;
+            }
+        },
+        mutations: {
+            update(state, payload) {
+                state.count = payload;
+            }
+        },
+
+        modules: {
+            example: {
+                namespaced: true,
+
+                getters: {
+                    triple: (state, getters, rootState, rootGetters) => {
+                        return rootState.count + rootGetters.double;
+                    }
+                },
+                actions: {
+                    multiplyByFive(ctx) {
+                        const payload = ctx.rootGetters.double + ctx.getters.triple;
+                        ctx.commit('update', payload, {root: true});
+                    }
+                }
+            }
+        }
+    });
+
+    console.log(store.state.count);
+    store.dispatch('example/multiplyByFive');
+    console.log(store.state.count);
+</script>
+</body>
+

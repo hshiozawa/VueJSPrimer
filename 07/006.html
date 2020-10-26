@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<script src="https://unpkg.com/vue@latest"></script>
+
+<script src="https://unpkg.com/vuex@latest"></script>
+
+<body>
+<script>
+    const store = new Vuex.Store({
+        modules: {
+            example: {
+                namespaced: true,
+                state: {
+                    value: 'Example'
+                },
+                getters: {
+                    upper: state => {
+                        return state.value.toUpperCase();
+                    }
+                },
+                mutations: {
+                    update(state) {
+                        state.value = 'Updated';
+                    }
+                },
+                actions: {
+                    update(ctx) {
+                        ctx.commit('update');
+                    }
+                }
+            }
+        }
+    });
+
+    function getCountNum(type) {
+        return new Promise(resolve => {
+            setTimeout(() => {
+                let amount;
+                switch (type) {
+                    case 'one':
+                        amount = 1;
+                        break;
+                    case 'two':
+                        amount = 2;
+                        break;
+                    case 'ten':
+                        amount = 10;
+                        break;
+                    default:
+                        amount = 0;
+                        break;
+                }
+
+                resolve({amount});
+            }, 1000);
+        });
+    }
+
+    const counter = {
+        // ステート
+        state: {
+            count: 10
+        },
+
+        getters: {
+            squared: (state) => state.count * state.count,
+        },
+
+        mutations: {
+            increment(state, {amount}) {
+                state.count += amount;
+            }
+        },
+
+        actions: {
+            incrementAsync({commit}, payload) {
+                return getCountNum(payload.type)
+                    .then(data => {
+                        commit('increment', {amount: data.amount});
+                    });
+            }
+        },
+    }
+
+    const store = new Vuex.Store({
+        modules: {
+            counter
+        }
+    });
+
+    console.log(store.state.counter.count);
+    console.log(store.getters.squared);
+    store.commit('increment', {amount: 5});
+    console.log(store.state.counter.count);
+    store.dispatch('incrementAsync', {type: 'one'}).then(() => {
+        console.log(store.state.counter.count);
+    });
+</script>
+</body>
+

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<script src="https://unpkg.com/vue@latest"></script>
+
+<script src="https://unpkg.com/vuex@latest"></script>
+
+<body>
+<script>
+    const store = new Vuex.Store({
+        modules: {
+            module1: {
+                state: {
+                    count: 1
+                },
+                actions: {
+                    log({state}) {
+                        console.log(`${state.count}`);
+                    }
+                }
+            },
+            module2: {
+                state: {
+                    count: 3
+                },
+                actions: {
+                    log({state}) {
+                        console.log(`${state.count}`);
+                    }
+                }
+            }
+        }
+    });
+
+    console.log(store.dispatch('log'));
+</script>
+</body>
+
